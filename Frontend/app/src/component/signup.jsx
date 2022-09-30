@@ -26,7 +26,7 @@ export const Signup = ()=>{
     formdata.append("email",formData.email)
     formdata.append("password",formData.password)
     formdata.append("profile",inputFile.current.files[0])
-    axios.post('http://localhost:8080/user/signup',formdata,{
+    axios.post('https://authcreatebackend.herokuapp.com/user/signup',formdata,{
         headers:{"Content-Type":"multipart/form-data"}
     })
     

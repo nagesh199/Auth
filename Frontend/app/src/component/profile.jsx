@@ -18,7 +18,7 @@ export const Profile = ()=>{
        getData()
     },[])
     const getData = ()=>{
-        axios.get(`http://localhost:8080/user/profile/${email}`,
+        axios.get(`https://authcreatebackend.herokuapp.com/user/profile/${email}`,
         { headers: {"Authorization" : `Bearer ${token}`} }).then(({data})=>{
             setData(data)
         })
@@ -33,7 +33,7 @@ export const Profile = ()=>{
                 {data.map(el=>{
                     
                     return <div className={styles.profile}>
-                            <img width="100px" src={`http://localhost:8080/static/${el.profile}`}/>
+                            <img width="100px" src={`https://authcreatebackend.herokuapp.com/static/${el.profile}`}/>
                             <h4>Name:{el.name}</h4>
                             <p>Email:{el.email}</p>
                         </div>
