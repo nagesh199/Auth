@@ -11,7 +11,7 @@ app.use(cors());
 
 app.use(session({secret:"COOKIESECERT",resave:false,saveUninitialized:true}))
 
-
+app.use("/static",express.static("./uplodes"))
 app.use("/user",useresRouter)
 app.get("/",(req,res)=>{
     console.log(req.session)

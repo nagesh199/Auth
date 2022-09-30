@@ -4,10 +4,23 @@ const  Users  = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const crypto = require("node:crypto");
 const auth = require("../middleware/middleware");
+const multer  = require('multer')
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uplodes')
+    },
+    filename: function (req, file, cb) {
+      console.log(req.file)
+      cb(null, file.originalname)
+    }
+  })
+  
+  const upload = multer({storage:storage })
 
-useresRouter.post("/signup",async (req,res)=>{
-    const {name,password,email,profile} = req.body
+useresRouter.post("/signup",upload.single("profile"),async (req,res)=>{
+    const {name,password,email} = req.body
+    const profile = req.file.originalname
 
     if(!name || !password || !email || !profile){
         res.status(400).send("Please add all field")
@@ -44,9 +57,9 @@ useresRouter.post("/signin", async(req,res)=>{
     
 })
 
-useresRouter.get("/profile/:id",auth, async(req,res)=>{
+useresRouter.get("/profile/:email",auth, async(req,res)=>{
     try {
-        const user = await Users.findById(req.params.id);
+        const user = await Users.find({email:req.params.email});
         res.status(200).send(user)
     }
     catch(err){
